@@ -31,11 +31,17 @@ public class ItemTarget implements Target {
 
     @Override
     public String getTypeId() {
+        if (type == null) {
+            return "Unknown";
+        }
         return type.getId();
     }
 
     @Override
     public String getFriendlyName() {
+        if (type == null) {
+            return "Unknown";
+        }
         return type.getName();
     }
 
