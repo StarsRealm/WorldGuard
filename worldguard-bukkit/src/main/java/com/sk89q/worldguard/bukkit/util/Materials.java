@@ -924,8 +924,8 @@ public final class Materials {
         putMaterialTag(Tag.ITEMS_DECORATED_POT_SHERDS, 0);
 
         Stream.concat(Stream.concat(
-                Tag.CORAL_BLOCKS.getValues().stream(),
-                Tag.CORALS.getValues().stream()),
+                        Tag.CORAL_BLOCKS.getValues().stream(),
+                        Tag.CORALS.getValues().stream()),
                 Tag.WALL_CORALS.getValues().stream()).forEach(m -> {
             MATERIAL_FLAGS.put(m, 0);
             Material dead = Material.getMaterial("DEAD_" + m.name());
@@ -1027,11 +1027,13 @@ public final class Materials {
      * @return the block material
      */
     public static Material getBucketBlockMaterial(Material type) {
-        return switch (type) {
-            case LAVA_BUCKET -> Material.LAVA;
-            case WATER_BUCKET -> Material.WATER;
-            default -> Material.WATER;
-        };
+        if (type == Material.LAVA_BUCKET) {
+            return Material.LAVA;
+        } else if (type == Material.WATER_BUCKET) {
+            return Material.WATER;
+        } else {
+            return Material.WATER;
+        }
     }
 
     /**
@@ -1072,7 +1074,7 @@ public final class Materials {
      */
     public static boolean isWater(Material material) {
         return material == Material.WATER || material == Material.BUBBLE_COLUMN
-            || material == Material.KELP_PLANT || material == Material.SEAGRASS || material == Material.TALL_SEAGRASS;
+                || material == Material.KELP_PLANT || material == Material.SEAGRASS || material == Material.TALL_SEAGRASS;
     }
 
     /**
@@ -1182,89 +1184,169 @@ public final class Materials {
     }
 
     public static EntityType getEntitySpawnEgg(Material material) {
-        return switch (material) {
-            case ALLAY_SPAWN_EGG -> EntityType.ALLAY;
-            case ARMADILLO_SPAWN_EGG -> EntityType.ARMADILLO;
-            case AXOLOTL_SPAWN_EGG -> EntityType.AXOLOTL;
-            case BAT_SPAWN_EGG -> EntityType.BAT;
-            case BEE_SPAWN_EGG -> EntityType.BEE;
-            case BLAZE_SPAWN_EGG -> EntityType.BLAZE;
-            case BOGGED_SPAWN_EGG -> EntityType.BOGGED;
-            case BREEZE_SPAWN_EGG -> EntityType.BREEZE;
-            case CAT_SPAWN_EGG -> EntityType.CAT;
-            case CAMEL_SPAWN_EGG -> EntityType.CAMEL;
-            case CAVE_SPIDER_SPAWN_EGG -> EntityType.CAVE_SPIDER;
-            case CHICKEN_SPAWN_EGG -> EntityType.CHICKEN;
-            case COD_SPAWN_EGG -> EntityType.COD;
-            case COW_SPAWN_EGG -> EntityType.COW;
-            case CREEPER_SPAWN_EGG -> EntityType.CREEPER;
-            case DOLPHIN_SPAWN_EGG -> EntityType.DOLPHIN;
-            case DONKEY_SPAWN_EGG -> EntityType.DONKEY;
-            case DROWNED_SPAWN_EGG -> EntityType.DROWNED;
-            case ELDER_GUARDIAN_SPAWN_EGG -> EntityType.ELDER_GUARDIAN;
-            case ENDER_DRAGON_SPAWN_EGG -> EntityType.ENDER_DRAGON;
-            case ENDERMAN_SPAWN_EGG -> EntityType.ENDERMAN;
-            case ENDERMITE_SPAWN_EGG -> EntityType.ENDERMITE;
-            case EVOKER_SPAWN_EGG -> EntityType.EVOKER;
-            case FOX_SPAWN_EGG -> EntityType.FOX;
-            case FROG_SPAWN_EGG -> EntityType.FROG;
-            case GHAST_SPAWN_EGG -> EntityType.GHAST;
-            case GLOW_SQUID_SPAWN_EGG -> EntityType.GLOW_SQUID;
-            case GOAT_SPAWN_EGG -> EntityType.GOAT;
-            case GUARDIAN_SPAWN_EGG -> EntityType.GUARDIAN;
-            case HOGLIN_SPAWN_EGG -> EntityType.HOGLIN;
-            case HORSE_SPAWN_EGG -> EntityType.HORSE;
-            case HUSK_SPAWN_EGG -> EntityType.HUSK;
-            case IRON_GOLEM_SPAWN_EGG -> EntityType.IRON_GOLEM;
-            case LLAMA_SPAWN_EGG -> EntityType.LLAMA;
-            case MAGMA_CUBE_SPAWN_EGG -> EntityType.MAGMA_CUBE;
-            case MOOSHROOM_SPAWN_EGG -> EntityType.MOOSHROOM;
-            case MULE_SPAWN_EGG -> EntityType.MULE;
-            case OCELOT_SPAWN_EGG -> EntityType.OCELOT;
-            case PANDA_SPAWN_EGG -> EntityType.PANDA;
-            case PARROT_SPAWN_EGG -> EntityType.PARROT;
-            case PHANTOM_SPAWN_EGG -> EntityType.PHANTOM;
-            case PIGLIN_BRUTE_SPAWN_EGG -> EntityType.PIGLIN_BRUTE;
-            case PIGLIN_SPAWN_EGG -> EntityType.PIGLIN;
-            case PILLAGER_SPAWN_EGG -> EntityType.PILLAGER;
-            case POLAR_BEAR_SPAWN_EGG -> EntityType.POLAR_BEAR;
-            case PUFFERFISH_SPAWN_EGG -> EntityType.PUFFERFISH;
-            case RABBIT_SPAWN_EGG -> EntityType.RABBIT;
-            case RAVAGER_SPAWN_EGG -> EntityType.RAVAGER;
-            case SALMON_SPAWN_EGG -> EntityType.SALMON;
-            case SHEEP_SPAWN_EGG -> EntityType.SHEEP;
-            case SHULKER_SPAWN_EGG -> EntityType.SHULKER;
-            case SILVERFISH_SPAWN_EGG -> EntityType.SILVERFISH;
-            case SKELETON_HORSE_SPAWN_EGG -> EntityType.SKELETON_HORSE;
-            case SKELETON_SPAWN_EGG -> EntityType.SKELETON;
-            case SLIME_SPAWN_EGG -> EntityType.SLIME;
-            case SNIFFER_SPAWN_EGG -> EntityType.SNIFFER;
-            case SNOW_GOLEM_SPAWN_EGG -> EntityType.SNOW_GOLEM;
-            case SPIDER_SPAWN_EGG -> EntityType.SPIDER;
-            case SQUID_SPAWN_EGG -> EntityType.SQUID;
-            case STRAY_SPAWN_EGG -> EntityType.STRAY;
-            case STRIDER_SPAWN_EGG -> EntityType.STRIDER;
-            case TADPOLE_SPAWN_EGG -> EntityType.TADPOLE;
-            case TRADER_LLAMA_SPAWN_EGG -> EntityType.TRADER_LLAMA;
-            case TROPICAL_FISH_SPAWN_EGG -> EntityType.TROPICAL_FISH;
-            case TURTLE_SPAWN_EGG -> EntityType.TURTLE;
-            case VEX_SPAWN_EGG -> EntityType.VEX;
-            case VILLAGER_SPAWN_EGG -> EntityType.VILLAGER;
-            case VINDICATOR_SPAWN_EGG -> EntityType.VINDICATOR;
-            case WANDERING_TRADER_SPAWN_EGG -> EntityType.WANDERING_TRADER;
-            case WARDEN_SPAWN_EGG -> EntityType.WARDEN;
-            case WITCH_SPAWN_EGG -> EntityType.WITCH;
-            case WITHER_SPAWN_EGG -> EntityType.WITHER;
-            case WITHER_SKELETON_SPAWN_EGG -> EntityType.WITHER_SKELETON;
-            case WOLF_SPAWN_EGG -> EntityType.WOLF;
-            case ZOGLIN_SPAWN_EGG -> EntityType.ZOGLIN;
-            case ZOMBIE_HORSE_SPAWN_EGG -> EntityType.ZOMBIE_HORSE;
-            case ZOMBIFIED_PIGLIN_SPAWN_EGG -> EntityType.ZOMBIFIED_PIGLIN;
-            case ZOMBIE_SPAWN_EGG -> EntityType.ZOMBIE;
-            case ZOMBIE_VILLAGER_SPAWN_EGG -> EntityType.ZOMBIE_VILLAGER;
-            case PIG_SPAWN_EGG -> EntityType.PIG;
-            default -> null;
-        };
+        if (material == Material.ALLAY_SPAWN_EGG) {
+            return EntityType.ALLAY;
+        } else if (material == Material.ARMADILLO_SPAWN_EGG) {
+            return EntityType.ARMADILLO;
+        } else if (material == Material.AXOLOTL_SPAWN_EGG) {
+            return EntityType.AXOLOTL;
+        } else if (material == Material.BAT_SPAWN_EGG) {
+            return EntityType.BAT;
+        } else if (material == Material.BEE_SPAWN_EGG) {
+            return EntityType.BEE;
+        } else if (material == Material.BLAZE_SPAWN_EGG) {
+            return EntityType.BLAZE;
+        } else if (material == Material.BOGGED_SPAWN_EGG) {
+            return EntityType.BOGGED;
+        } else if (material == Material.BREEZE_SPAWN_EGG) {
+            return EntityType.BREEZE;
+        } else if (material == Material.CAT_SPAWN_EGG) {
+            return EntityType.CAT;
+        } else if (material == Material.CAMEL_SPAWN_EGG) {
+            return EntityType.CAMEL;
+        } else if (material == Material.CAVE_SPIDER_SPAWN_EGG) {
+            return EntityType.CAVE_SPIDER;
+        } else if (material == Material.CHICKEN_SPAWN_EGG) {
+            return EntityType.CHICKEN;
+        } else if (material == Material.COD_SPAWN_EGG) {
+            return EntityType.COD;
+        } else if (material == Material.COW_SPAWN_EGG) {
+            return EntityType.COW;
+        } else if (material == Material.CREEPER_SPAWN_EGG) {
+            return EntityType.CREEPER;
+        } else if (material == Material.DOLPHIN_SPAWN_EGG) {
+            return EntityType.DOLPHIN;
+        } else if (material == Material.DONKEY_SPAWN_EGG) {
+            return EntityType.DONKEY;
+        } else if (material == Material.DROWNED_SPAWN_EGG) {
+            return EntityType.DROWNED;
+        } else if (material == Material.ELDER_GUARDIAN_SPAWN_EGG) {
+            return EntityType.ELDER_GUARDIAN;
+        } else if (material == Material.ENDER_DRAGON_SPAWN_EGG) {
+            return EntityType.ENDER_DRAGON;
+        } else if (material == Material.ENDERMAN_SPAWN_EGG) {
+            return EntityType.ENDERMAN;
+        } else if (material == Material.ENDERMITE_SPAWN_EGG) {
+            return EntityType.ENDERMITE;
+        } else if (material == Material.EVOKER_SPAWN_EGG) {
+            return EntityType.EVOKER;
+        } else if (material == Material.FOX_SPAWN_EGG) {
+            return EntityType.FOX;
+        } else if (material == Material.FROG_SPAWN_EGG) {
+            return EntityType.FROG;
+        } else if (material == Material.GHAST_SPAWN_EGG) {
+            return EntityType.GHAST;
+        } else if (material == Material.GLOW_SQUID_SPAWN_EGG) {
+            return EntityType.GLOW_SQUID;
+        } else if (material == Material.GOAT_SPAWN_EGG) {
+            return EntityType.GOAT;
+        } else if (material == Material.GUARDIAN_SPAWN_EGG) {
+            return EntityType.GUARDIAN;
+        } else if (material == Material.HOGLIN_SPAWN_EGG) {
+            return EntityType.HOGLIN;
+        } else if (material == Material.HORSE_SPAWN_EGG) {
+            return EntityType.HORSE;
+        } else if (material == Material.HUSK_SPAWN_EGG) {
+            return EntityType.HUSK;
+        } else if (material == Material.IRON_GOLEM_SPAWN_EGG) {
+            return EntityType.IRON_GOLEM;
+        } else if (material == Material.LLAMA_SPAWN_EGG) {
+            return EntityType.LLAMA;
+        } else if (material == Material.MAGMA_CUBE_SPAWN_EGG) {
+            return EntityType.MAGMA_CUBE;
+        } else if (material == Material.MOOSHROOM_SPAWN_EGG) {
+            return EntityType.MOOSHROOM;
+        } else if (material == Material.MULE_SPAWN_EGG) {
+            return EntityType.MULE;
+        } else if (material == Material.OCELOT_SPAWN_EGG) {
+            return EntityType.OCELOT;
+        } else if (material == Material.PANDA_SPAWN_EGG) {
+            return EntityType.PANDA;
+        } else if (material == Material.PARROT_SPAWN_EGG) {
+            return EntityType.PARROT;
+        } else if (material == Material.PHANTOM_SPAWN_EGG) {
+            return EntityType.PHANTOM;
+        } else if (material == Material.PIGLIN_BRUTE_SPAWN_EGG) {
+            return EntityType.PIGLIN_BRUTE;
+        } else if (material == Material.PIGLIN_SPAWN_EGG) {
+            return EntityType.PIGLIN;
+        } else if (material == Material.PILLAGER_SPAWN_EGG) {
+            return EntityType.PILLAGER;
+        } else if (material == Material.POLAR_BEAR_SPAWN_EGG) {
+            return EntityType.POLAR_BEAR;
+        } else if (material == Material.PUFFERFISH_SPAWN_EGG) {
+            return EntityType.PUFFERFISH;
+        } else if (material == Material.RABBIT_SPAWN_EGG) {
+            return EntityType.RABBIT;
+        } else if (material == Material.RAVAGER_SPAWN_EGG) {
+            return EntityType.RAVAGER;
+        } else if (material == Material.SALMON_SPAWN_EGG) {
+            return EntityType.SALMON;
+        } else if (material == Material.SHEEP_SPAWN_EGG) {
+            return EntityType.SHEEP;
+        } else if (material == Material.SHULKER_SPAWN_EGG) {
+            return EntityType.SHULKER;
+        } else if (material == Material.SILVERFISH_SPAWN_EGG) {
+            return EntityType.SILVERFISH;
+        } else if (material == Material.SKELETON_HORSE_SPAWN_EGG) {
+            return EntityType.SKELETON_HORSE;
+        } else if (material == Material.SKELETON_SPAWN_EGG) {
+            return EntityType.SKELETON;
+        } else if (material == Material.SLIME_SPAWN_EGG) {
+            return EntityType.SLIME;
+        } else if (material == Material.SNIFFER_SPAWN_EGG) {
+            return EntityType.SNIFFER;
+        } else if (material == Material.SNOW_GOLEM_SPAWN_EGG) {
+            return EntityType.SNOW_GOLEM;
+        } else if (material == Material.SPIDER_SPAWN_EGG) {
+            return EntityType.SPIDER;
+        } else if (material == Material.SQUID_SPAWN_EGG) {
+            return EntityType.SQUID;
+        } else if (material == Material.STRAY_SPAWN_EGG) {
+            return EntityType.STRAY;
+        } else if (material == Material.STRIDER_SPAWN_EGG) {
+            return EntityType.STRIDER;
+        } else if (material == Material.TADPOLE_SPAWN_EGG) {
+            return EntityType.TADPOLE;
+        } else if (material == Material.TRADER_LLAMA_SPAWN_EGG) {
+            return EntityType.TRADER_LLAMA;
+        } else if (material == Material.TROPICAL_FISH_SPAWN_EGG) {
+            return EntityType.TROPICAL_FISH;
+        } else if (material == Material.TURTLE_SPAWN_EGG) {
+            return EntityType.TURTLE;
+        } else if (material == Material.VEX_SPAWN_EGG) {
+            return EntityType.VEX;
+        } else if (material == Material.VILLAGER_SPAWN_EGG) {
+            return EntityType.VILLAGER;
+        } else if (material == Material.VINDICATOR_SPAWN_EGG) {
+            return EntityType.VINDICATOR;
+        } else if (material == Material.WANDERING_TRADER_SPAWN_EGG) {
+            return EntityType.WANDERING_TRADER;
+        } else if (material == Material.WARDEN_SPAWN_EGG) {
+            return EntityType.WARDEN;
+        } else if (material == Material.WITCH_SPAWN_EGG) {
+            return EntityType.WITCH;
+        } else if (material == Material.WITHER_SPAWN_EGG) {
+            return EntityType.WITHER;
+        } else if (material == Material.WITHER_SKELETON_SPAWN_EGG) {
+            return EntityType.WITHER_SKELETON;
+        } else if (material == Material.WOLF_SPAWN_EGG) {
+            return EntityType.WOLF;
+        } else if (material == Material.ZOGLIN_SPAWN_EGG) {
+            return EntityType.ZOGLIN;
+        } else if (material == Material.ZOMBIE_HORSE_SPAWN_EGG) {
+            return EntityType.ZOMBIE_HORSE;
+        } else if (material == Material.ZOMBIFIED_PIGLIN_SPAWN_EGG) {
+            return EntityType.ZOMBIFIED_PIGLIN;
+        } else if (material == Material.ZOMBIE_SPAWN_EGG) {
+            return EntityType.ZOMBIE;
+        } else if (material == Material.ZOMBIE_VILLAGER_SPAWN_EGG) {
+            return EntityType.ZOMBIE_VILLAGER;
+        } else if (material == Material.PIG_SPAWN_EGG) {
+            return EntityType.PIG;
+        } else {
+            return null;
+        }
     }
 
     public static boolean isBed(Material material) {
@@ -1284,22 +1366,33 @@ public final class Materials {
 
     /**
      * Test whether the material is a crop.
+     *
      * @param type the material
      * @return true if the material is a crop
      */
+    @SuppressWarnings("RedundantIfStatement")
     public static boolean isCrop(Material type) {
         if (Tag.CROPS.isTagged(type)) return true;
         // yea, that's not all, there are some more
-        return switch (type) {
-            case PUMPKIN, MELON, CACTUS, SUGAR_CANE, BAMBOO, BAMBOO_SAPLING,
-                    SWEET_BERRY_BUSH, NETHER_WART, CAVE_VINES, CAVE_VINES_PLANT ->
-                    true;
-            default -> false;
-        };
+        if (type == Material.PUMPKIN ||
+                type == Material.MELON ||
+                type == Material.CACTUS ||
+                type == Material.SUGAR_CANE ||
+                type == Material.BAMBOO ||
+                type == Material.BAMBOO_SAPLING ||
+                type == Material.SWEET_BERRY_BUSH ||
+                type == Material.NETHER_WART ||
+                type == Material.CAVE_VINES ||
+                type == Material.CAVE_VINES_PLANT) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Test whether the material should be handled as vine. Used by the vine-growth flag
+     *
      * @param newType the material
      * @return true if the material should be handled as vine
      */
@@ -1322,6 +1415,7 @@ public final class Materials {
      * @param material the material
      * @return true if covered by the use flag
      */
+    @SuppressWarnings("RedundantIfStatement")
     public static boolean isUseFlagApplicable(Material material) {
         if (Tag.BUTTONS.isTagged(material)
                 || Tag.DOORS.isTagged(material)
@@ -1330,11 +1424,19 @@ public final class Materials {
                 || Tag.PRESSURE_PLATES.isTagged(material)) {
             return true;
         }
-        return switch (material) {
-            case LEVER, LECTERN, ENCHANTING_TABLE, BELL, LOOM,
-                    CARTOGRAPHY_TABLE, STONECUTTER, GRINDSTONE, VAULT -> true;
-            default -> false;
-        };
+        if (material == Material.LEVER ||
+                material == Material.LECTERN ||
+                material == Material.ENCHANTING_TABLE ||
+                material == Material.BELL ||
+                material == Material.LOOM ||
+                material == Material.CARTOGRAPHY_TABLE ||
+                material == Material.STONECUTTER ||
+                material == Material.GRINDSTONE ||
+                material == Material.VAULT) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1344,7 +1446,7 @@ public final class Materials {
      * <p>This test is conservative, returning true for blocks that it is not
      * aware of.</p>
      *
-     * @param material the material
+     * @param material   the material
      * @param rightClick whether it is a right click
      * @return true if the block is modified
      */
@@ -1361,7 +1463,7 @@ public final class Materials {
      * <p>This test is conservative, returning true for items that it is not
      * aware of or does not have the details for.</p>
      *
-     * @param item the item
+     * @param item  the item
      * @param block the block
      * @return true if the item is applied to the block
      */
@@ -1379,13 +1481,13 @@ public final class Materials {
      */
     public static boolean isConsideredBuildingIfUsed(Material type) {
         return type == Material.REPEATER
-            || type == Material.COMPARATOR
-            || type == Material.CAKE
-            || type == Material.DRAGON_EGG
-            || Tag.FLOWER_POTS.isTagged(type)
-            || Tag.CANDLES.isTagged(type)
-            || Tag.CANDLE_CAKES.isTagged(type)
-            || Tag.ALL_SIGNS.isTagged(type);
+                || type == Material.COMPARATOR
+                || type == Material.CAKE
+                || type == Material.DRAGON_EGG
+                || Tag.FLOWER_POTS.isTagged(type)
+                || Tag.CANDLES.isTagged(type)
+                || Tag.CANDLE_CAKES.isTagged(type)
+                || Tag.ALL_SIGNS.isTagged(type);
     }
 
     /**
@@ -1432,83 +1534,84 @@ public final class Materials {
      * by the provided tool, or of the provided tool material isn't
      * a tool material.
      *
-     * @param toolMaterial the tool material being used
+     * @param toolMaterial   the tool material being used
      * @param targetMaterial the target material to check
      * @return true if tool has an interact function with this material
      */
     public static boolean isToolApplicable(Material toolMaterial, Material targetMaterial) {
-        switch (toolMaterial) {
-            case WOODEN_HOE:
-            case STONE_HOE:
-            case IRON_HOE:
-            case GOLDEN_HOE:
-            case DIAMOND_HOE:
-            case NETHERITE_HOE:
-                return switch (targetMaterial) {
-                    case GRASS_BLOCK, DIRT, DIRT_PATH, ROOTED_DIRT ->
-                            true;
-                    default -> false;
-                };
-            case WOODEN_AXE:
-            case STONE_AXE:
-            case IRON_AXE:
-            case GOLDEN_AXE:
-            case DIAMOND_AXE:
-            case NETHERITE_AXE:
-                if (isWaxedCopper(targetMaterial)) return true;
-                if (Tag.LOGS.isTagged(targetMaterial)) return true;
-                return switch (targetMaterial) {
-                    case OAK_WOOD, DARK_OAK_WOOD, ACACIA_WOOD, BIRCH_WOOD, SPRUCE_WOOD, PUMPKIN, BAMBOO_BLOCK,
-                            JUNGLE_WOOD, CRIMSON_STEM, WARPED_STEM, CRIMSON_HYPHAE, WARPED_HYPHAE ->
-                            true;
-                    default -> false;
-                };
-            case WOODEN_SHOVEL:
-            case STONE_SHOVEL:
-            case IRON_SHOVEL:
-            case GOLDEN_SHOVEL:
-            case DIAMOND_SHOVEL:
-            case NETHERITE_SHOVEL:
-                return switch (targetMaterial) {
-                    case GRASS_BLOCK, CAMPFIRE, SOUL_CAMPFIRE -> true;
-                    default -> false;
-                };
-            case SHEARS:
-                return switch (targetMaterial) {
-                    case PUMPKIN, BEE_NEST, BEEHIVE -> true;
-                    default -> false;
-                };
-            case BLACK_DYE:
-            case BLUE_DYE:
-            case BROWN_DYE:
-            case CYAN_DYE:
-            case GRAY_DYE:
-            case GREEN_DYE:
-            case LIGHT_BLUE_DYE:
-            case LIGHT_GRAY_DYE:
-            case LIME_DYE:
-            case MAGENTA_DYE:
-            case ORANGE_DYE:
-            case PINK_DYE:
-            case PURPLE_DYE:
-            case RED_DYE:
-            case WHITE_DYE:
-            case YELLOW_DYE:
-            case GLOW_INK_SAC:
-            case INK_SAC:
-                return Tag.ALL_SIGNS.isTagged(targetMaterial);
-            case HONEYCOMB:
-                return isUnwaxedCopper(targetMaterial) || Tag.ALL_SIGNS.isTagged(targetMaterial);
-            case BRUSH:
-                return switch (targetMaterial) {
-                    case SUSPICIOUS_GRAVEL, SUSPICIOUS_SAND -> true;
-                    default -> false;
-                };
-            case WRITTEN_BOOK:
-            case WRITABLE_BOOK:
-                return targetMaterial == Material.LECTERN;
-            default:
-                return false;
+        if (toolMaterial == Material.WOODEN_HOE ||
+                toolMaterial == Material.STONE_HOE ||
+                toolMaterial == Material.IRON_HOE ||
+                toolMaterial == Material.GOLDEN_HOE ||
+                toolMaterial == Material.DIAMOND_HOE ||
+                toolMaterial == Material.NETHERITE_HOE) {
+            return targetMaterial == Material.GRASS_BLOCK ||
+                    targetMaterial == Material.DIRT ||
+                    targetMaterial == Material.DIRT_PATH ||
+                    targetMaterial == Material.ROOTED_DIRT;
+        } else if (toolMaterial == Material.WOODEN_AXE ||
+                toolMaterial == Material.STONE_AXE ||
+                toolMaterial == Material.IRON_AXE ||
+                toolMaterial == Material.GOLDEN_AXE ||
+                toolMaterial == Material.DIAMOND_AXE ||
+                toolMaterial == Material.NETHERITE_AXE) {
+            if (isWaxedCopper(targetMaterial) || Tag.LOGS.isTagged(targetMaterial)) {
+                return true;
+            }
+            return targetMaterial == Material.OAK_WOOD ||
+                    targetMaterial == Material.DARK_OAK_WOOD ||
+                    targetMaterial == Material.ACACIA_WOOD ||
+                    targetMaterial == Material.BIRCH_WOOD ||
+                    targetMaterial == Material.SPRUCE_WOOD ||
+                    targetMaterial == Material.PUMPKIN ||
+                    targetMaterial == Material.BAMBOO_BLOCK ||
+                    targetMaterial == Material.JUNGLE_WOOD ||
+                    targetMaterial == Material.CRIMSON_STEM ||
+                    targetMaterial == Material.WARPED_STEM ||
+                    targetMaterial == Material.CRIMSON_HYPHAE ||
+                    targetMaterial == Material.WARPED_HYPHAE;
+        } else if (toolMaterial == Material.WOODEN_SHOVEL ||
+                toolMaterial == Material.STONE_SHOVEL ||
+                toolMaterial == Material.IRON_SHOVEL ||
+                toolMaterial == Material.GOLDEN_SHOVEL ||
+                toolMaterial == Material.DIAMOND_SHOVEL ||
+                toolMaterial == Material.NETHERITE_SHOVEL) {
+            return targetMaterial == Material.GRASS_BLOCK ||
+                    targetMaterial == Material.CAMPFIRE ||
+                    targetMaterial == Material.SOUL_CAMPFIRE;
+        } else if (toolMaterial == Material.SHEARS) {
+            return targetMaterial == Material.PUMPKIN ||
+                    targetMaterial == Material.BEE_NEST ||
+                    targetMaterial == Material.BEEHIVE;
+        } else if (toolMaterial == Material.BLACK_DYE ||
+                toolMaterial == Material.BLUE_DYE ||
+                toolMaterial == Material.BROWN_DYE ||
+                toolMaterial == Material.CYAN_DYE ||
+                toolMaterial == Material.GRAY_DYE ||
+                toolMaterial == Material.GREEN_DYE ||
+                toolMaterial == Material.LIGHT_BLUE_DYE ||
+                toolMaterial == Material.LIGHT_GRAY_DYE ||
+                toolMaterial == Material.LIME_DYE ||
+                toolMaterial == Material.MAGENTA_DYE ||
+                toolMaterial == Material.ORANGE_DYE ||
+                toolMaterial == Material.PINK_DYE ||
+                toolMaterial == Material.PURPLE_DYE ||
+                toolMaterial == Material.RED_DYE ||
+                toolMaterial == Material.WHITE_DYE ||
+                toolMaterial == Material.YELLOW_DYE ||
+                toolMaterial == Material.GLOW_INK_SAC ||
+                toolMaterial == Material.INK_SAC) {
+            return Tag.ALL_SIGNS.isTagged(targetMaterial);
+        } else if (toolMaterial == Material.HONEYCOMB) {
+            return isUnwaxedCopper(targetMaterial) || Tag.ALL_SIGNS.isTagged(targetMaterial);
+        } else if (toolMaterial == Material.BRUSH) {
+            return targetMaterial == Material.SUSPICIOUS_GRAVEL ||
+                    targetMaterial == Material.SUSPICIOUS_SAND;
+        } else if (toolMaterial == Material.WRITTEN_BOOK ||
+                toolMaterial == Material.WRITABLE_BOOK) {
+            return targetMaterial == Material.LECTERN;
+        } else {
+            return false;
         }
     }
 
@@ -1523,11 +1626,19 @@ public final class Materials {
 
     public static boolean isUnwaxedCopper(Material type) {
         // copied from the MaterialTags class in Paper
-        return switch (type) {
-            case COPPER_BLOCK, CHISELED_COPPER, COPPER_DOOR, COPPER_TRAPDOOR, COPPER_GRATE, COPPER_BULB -> true;
-            default -> type.name().startsWith("EXPOSED_") || type.name().startsWith("WEATHERED_") ||
-                    type.name().startsWith("OXIDIZED_") || type.name().startsWith("CUT_COPPER");
-        };
+        if (type == Material.COPPER_BLOCK ||
+                type == Material.CHISELED_COPPER ||
+                type == Material.COPPER_DOOR ||
+                type == Material.COPPER_TRAPDOOR ||
+                type == Material.COPPER_GRATE ||
+                type == Material.COPPER_BULB) {
+            return true;
+        } else {
+            return type.name().startsWith("EXPOSED_") ||
+                    type.name().startsWith("WEATHERED_") ||
+                    type.name().startsWith("OXIDIZED_") ||
+                    type.name().startsWith("CUT_COPPER");
+        }
     }
 
     public static boolean isAmethystGrowth(Material mat) {
