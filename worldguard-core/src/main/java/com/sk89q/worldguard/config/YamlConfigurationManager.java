@@ -111,8 +111,8 @@ public abstract class YamlConfigurationManager extends ConfigurationManager {
         this.selectedRegionStoreDriver = useSqlDatabase ? sqlDriver : yamlDriver;
 
         postLoad();
-
-        config.setHeader(CONFIG_HEADER);
+//
+//        config.setHeader(CONFIG_HEADER);
     }
 
     public void postLoad() {}
