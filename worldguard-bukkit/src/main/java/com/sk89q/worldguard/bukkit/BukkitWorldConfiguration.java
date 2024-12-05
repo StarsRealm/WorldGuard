@@ -419,7 +419,7 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
             }
         }
 
-        config.setHeader(CONFIG_HEADER);
+        //config.setHeader(CONFIG_HEADER);
 
         config.save();
         if (needParentSave) {
