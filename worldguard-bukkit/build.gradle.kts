@@ -5,14 +5,6 @@ plugins {
     id("buildlogic.platform")
 }
 
-val localImplementation = configurations.create("localImplementation") {
-    description = "Dependencies used locally, but provided by the runtime Bukkit implementation"
-    isCanBeConsumed = false
-    isCanBeResolved = false
-}
-configurations["compileOnly"].extendsFrom(localImplementation)
-configurations["testImplementation"].extendsFrom(localImplementation)
-
 dependencies {
     "api"(project(":worldguard-core"))
     "api"(libs.worldedit.bukkit) { isTransitive = false }
