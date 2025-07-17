@@ -1,10 +1,11 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
     `java-library`
     id("buildlogic.platform")
+    id("io.papermc.paperweight.userdev")
 }
-
+paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
 dependencies {
     "api"(project(":worldguard-core"))
     "api"(libs.worldedit.bukkit) { isTransitive = false }
@@ -16,7 +17,7 @@ dependencies {
     "testCompileOnly"(libs.jetbrains.annotations) {
         because("Resolving Spigot annotations")
     }
-    "compileOnly"(libs.paperApi) {
+    paperweight.devBundle("com.starsrealm.nylon", "1.21.7-R0.1-20250705.122835-1") {
         exclude("org.slf4j", "slf4j-api")
         exclude("junit", "junit")
     }
@@ -33,7 +34,7 @@ tasks.named<Copy>("processResources") {
     }
 }
 
-tasks.named<ShadowJar>("shadowJar") {
+tasks.shadowJar {
     dependencies {
         include(dependency(":worldguard-core"))
         include(dependency("org.bstats:"))

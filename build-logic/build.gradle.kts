@@ -3,9 +3,10 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     gradlePluginPortal()
     maven {
-        name = "EngineHub Repository"
+        name = "EngineHub"
         url = uri("https://maven.enginehub.org/repo/")
     }
 }
@@ -15,6 +16,7 @@ dependencies {
     implementation(libs.licenser)
     implementation(libs.grgit)
     implementation(libs.shadow)
+    implementation(libs.paperweight)
     implementation(libs.jfrog.buildinfo)
     implementation(libs.gson)
 
