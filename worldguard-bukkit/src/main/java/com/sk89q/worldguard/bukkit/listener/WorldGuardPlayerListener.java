@@ -39,7 +39,6 @@ import com.sk89q.worldguard.session.handler.GameModeFlag;
 import com.sk89q.worldguard.util.Entities;
 import com.sk89q.worldguard.util.command.CommandFilter;
 import com.sk89q.worldguard.util.profile.Profile;
-import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -195,7 +194,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                     && !(cfg.hostKeysAllowFMLClients &&
                     (hostname.equals(hostKey + "\u0000FML\u0000") || hostname.equals(hostKey + "\u0000FML2\u0000")))) {
 
-                final Component kickMessage = Component.text("You did not join with the valid host key!");
+                final net.kyori.adventure.text.Component kickMessage = net.kyori.adventure.text.Component.text("You did not join with the valid host key!");
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, kickMessage);
 
                 log.warning("WorldGuard host key check: " +
