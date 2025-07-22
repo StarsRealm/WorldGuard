@@ -39,6 +39,7 @@ import com.sk89q.worldguard.session.handler.GameModeFlag;
 import com.sk89q.worldguard.util.Entities;
 import com.sk89q.worldguard.util.command.CommandFilter;
 import com.sk89q.worldguard.util.profile.Profile;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -55,7 +56,7 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -63,6 +64,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
@@ -107,6 +109,10 @@ public class WorldGuardPlayerListener extends AbstractListener {
         ConfigurationManager cfg = getConfig();
         WorldConfiguration wcfg = getWorldConfig(world);
 
+        if (cfg.deopOnJoin) {
+            player.setOp(false);
+        }
+
         if (cfg.activityHaltToggle) {
             player.sendMessage(ChatColor.YELLOW
                     + "Intensive server activity has been HALTED.");
@@ -133,7 +139,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
 
         Events.fire(new ProcessPlayerEvent(player));
         WorldGuard.getInstance().getExecutorService().submit(() ->
-            WorldGuard.getInstance().getProfileCache().put(new Profile(player.getUniqueId(), player.getName())));
+                WorldGuard.getInstance().getProfileCache().put(new Profile(player.getUniqueId(), player.getName())));
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -153,7 +159,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
             }
 
             boolean anyRemoved = false;
-            for (Iterator<Player> i = event.getRecipients().iterator(); i.hasNext();) {
+            for (Iterator<Player> i = event.getRecipients().iterator(); i.hasNext(); ) {
                 Player rPlayer = i.next();
                 LocalPlayer rLocal = getPlugin().wrapPlayer(rPlayer);
                 if (!query.testState(rLocal.getLocation(), rLocal, Flags.RECEIVE_CHAT)) {
@@ -167,14 +173,15 @@ public class WorldGuardPlayerListener extends AbstractListener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerLogin(PlayerLoginEvent event) {
-        Player player = event.getPlayer();
-        ConfigurationManager cfg = getConfig();
+    @EventHandler
+    public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
+        final UUID uuid = event.getUniqueId();
+        final String name = event.getName();
 
-        String hostKey = cfg.hostKeys.get(player.getUniqueId().toString());
+        final ConfigurationManager cfg = getConfig();
+        String hostKey = cfg.hostKeys.get(uuid.toString());
         if (hostKey == null) {
-            hostKey = cfg.hostKeys.get(player.getName().toLowerCase());
+            hostKey = cfg.hostKeys.get(name.toLowerCase());
         }
 
         if (hostKey != null) {
@@ -186,18 +193,15 @@ public class WorldGuardPlayerListener extends AbstractListener {
 
             if (!hostname.equals(hostKey)
                     && !(cfg.hostKeysAllowFMLClients &&
-                            (hostname.equals(hostKey + "\u0000FML\u0000") || hostname.equals(hostKey + "\u0000FML2\u0000")))) {
-                event.disallow(PlayerLoginEvent.Result.KICK_OTHER,
-                        "You did not join with the valid host key!");
-                log.warning("WorldGuard host key check: " +
-                        player.getName() + " joined with '" + hostname +
-                        "' but '" + hostKey + "' was expected. Kicked!");
-                return;
-            }
-        }
+                    (hostname.equals(hostKey + "\u0000FML\u0000") || hostname.equals(hostKey + "\u0000FML2\u0000")))) {
 
-        if (cfg.deopOnJoin) {
-            player.setOp(false);
+                final Component kickMessage = Component.text("You did not join with the valid host key!");
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, kickMessage);
+
+                log.warning("WorldGuard host key check: " +
+                        name + " joined with '" + hostname +
+                        "' but '" + hostKey + "' was expected. Kicked!");
+            }
         }
     }
 
@@ -267,7 +271,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                     player.sendMessage(ChatColor.YELLOW + "Can you build? " + (set.testState(localPlayer, Flags.BUILD) ? "Yes" : "No"));
 
                     StringBuilder str = new StringBuilder();
-                    for (Iterator<ProtectedRegion> it = set.iterator(); it.hasNext();) {
+                    for (Iterator<ProtectedRegion> it = set.iterator(); it.hasNext(); ) {
                         str.append(it.next().getId());
                         if (it.hasNext()) {
                             str.append(", ");
@@ -385,7 +389,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                         return;
                     }
                 }
-            } else if (event.getCause() == TeleportCause.CHORUS_FRUIT) {
+            } else if (event.getCause() == TeleportCause.CONSUMABLE_EFFECT) {
                 if (!WorldGuard.getInstance().getPlatform().getSessionManager().hasBypass(localPlayer, localPlayer.getWorld())) {
                     boolean cancel = false;
                     String message = null;

@@ -17,7 +17,7 @@ dependencies {
     "testCompileOnly"(libs.jetbrains.annotations) {
         because("Resolving Spigot annotations")
     }
-    paperweight.devBundle("com.starsrealm.nylon", "1.21.7-R0.1-20250705.122835-1") {
+    paperweight.devBundle("com.starsrealm.nylon", "1.21.8-R0.1-20250718.032832-1") {
         exclude("org.slf4j", "slf4j-api")
         exclude("junit", "junit")
     }
